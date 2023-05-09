@@ -1,0 +1,56 @@
+.card {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__top {
+    display: flex;
+    gap: 5px;
+
+    &__labels {
+      flex: 1;
+      display: flex;
+      gap: 10px;
+    }
+
+    & button {
+      position: relative;
+      outline: none;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+  }
+
+  &__top svg {
+    opacity: 0;
+  }
+
+  &:hover &__top svg {
+    opacity: 1;
+  }
+
+  &__title {
+    font-weight: bold;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & p {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    & svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
