@@ -3,63 +3,96 @@ import { X } from 'react-feather';
 
 import './Editable.scss';
 
-export function Editable(props: {
-  onSubmit?: () => void,
+type Props = {
+  editableClass?: string
+  onSubmit?: (value: string, boardId?: number) => void,
   text?: string,
   placeholder?: string,
   buttonText?: string,
   displayClass?: string,
   editClass?: string,
-}) {
+  boardId?: number,
+};
+
+export function Editable(props: Props) {
   const [showEdit, setShowEdit] = useState(false);
+  const {
+    editableClass,
+    onSubmit,
+    text,
+    placeholder,
+    buttonText,
+    displayClass,
+    editClass,
+    boardId,
+  } = props;
+  const [inputValue, setInputValue] = useState(text || '');
 
   const handleSubmit = (event: FormEvent<HTMLElement>) => {
     event.preventDefault();
 
-    setShowEdit(false);
+    if (onSubmit) {
+      if (buttonText === 'Add Board' || buttonText === 'Add Card') {
+        if (boardId) {
+          onSubmit(inputValue, boardId);
+        } else {
+          onSubmit(inputValue);
+        }
 
-    if (props.onSubmit) {
-      props.onSubmit();
+        setInputValue('');
+        setShowEdit(false);
+
+        return;
+      }
+
+      onSubmit(inputValue);
     }
+
+    setShowEdit(false);
+  };
+
+  const closeEdit = () => {
+    setShowEdit(false);
+    setInputValue(text || '');
   };
 
   return (
-    <div className="editable">
+    <div className={`editable ${editableClass || ''}`}>
       {showEdit
         ? (
           <form
-            className={`editable__edit ${props.editClass || ''}`}
+            className={`editable__edit ${editClass || ''}`}
             onSubmit={handleSubmit}
           >
             <input
               type="text"
-              defaultValue={props.text}
-              placeholder={props.placeholder || 'Enter item'}
+              value={inputValue}
+              placeholder={placeholder || 'Enter item'}
               ref={input => input && input.focus()}
+              onChange={(e) => setInputValue(e.target.value)}
+              required
             />
             <div className="editable__edit__footer">
-              <button
-                type="submit"
-                onClick={() => setShowEdit(false)}
-              >
-                {props.buttonText || 'Add'}
+              <button type="submit">
+                {buttonText || 'Add item'}
               </button>
-              <X onClick={() => setShowEdit(false)} />
+              <X onClick={closeEdit} />
             </div>
           </form>
         )
         : (
           <button
-            className={`editable__display ${props.displayClass || ''}`}
+            className={`editable__display ${displayClass || ''}`}
             type="button"
-            // style={{
-            //   width: '100%',
-            //   border: 'none',
-            //   fontSize: '1rem',
-            // }}
-            onClick={() => setShowEdit(true)}
+            onClick={() => {
+              if (buttonText === 'Add Label' || buttonText === 'Add New Task') {
+                setInputValue('');
+              }
+
+              setShowEdit(true);
+            }}
           >
-            {props.text || 'Add item'}
+            {text || buttonText || 'Add item'}
           </button>
         )}
     </div>

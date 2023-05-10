@@ -2,40 +2,34 @@ import React from 'react';
 
 import './Dropdown.scss';
 
-export function Dropdown(props: { text: string }) {
-  const deleteItem = () => {
-    // eslint-disable-next-line no-console
-    console.log('hi deleted Item');
-  };
-  // const dropdownRef = useRef(null);
+type Props = {
+  text: string;
+  onClose: (boardId: number, cardId?: number) => void;
+  boardId: number;
+  cardId?: number;
+};
 
-  // const handleClick = (event: MouseEvent) => {
-  //   if (dropdownRef.current && dropdownRef.current.contains(event.target)) {
-  //     props.onClose();
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener('click', handleClick);
-
-  //   return () => {
-  //     document.removeEventListener('click', handleClick);
-  //   };
-  // });
+export function Dropdown(props: Props) {
+  const {
+    text,
+    onClose,
+    boardId,
+    cardId,
+  } = props;
 
   return (
     <div className="dropdown">
       <a
         href="#delete"
-        // style={{
-        //   textDecoration: 'none',
-        //   color: 'inherit',
-        //   backgroundColor: 'transparent',
-        //   cursor: 'pointer',
-        // }}
-        onMouseDown={() => deleteItem()}
+        onMouseDown={() => {
+          if (cardId) {
+            onClose(boardId, cardId);
+          } else {
+            onClose(boardId);
+          }
+        }}
       >
-        {props.text}
+        {text}
       </a>
     </div>
   );

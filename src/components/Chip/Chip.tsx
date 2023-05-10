@@ -2,27 +2,32 @@ import React from 'react';
 import { X } from 'react-feather';
 
 import './Chip.scss';
+import { LabelPropType } from '../../types/types';
 
-export function Chip(props: {
-  text: string,
-  close?: () => void,
+type Props = {
+  close?: (value: string) => void,
   onClose?: boolean,
-  color: string
-}) {
+  label: LabelPropType,
+};
+
+export function Chip(props: Props) {
+  const { close, onClose, label } = props;
+  const { text, color } = label;
+
   return (
     <div
       className="chip"
       style={{
-        backgroundColor: props.color,
+        backgroundColor: color,
       }}
     >
-      {props.text}
-      {props.close
+      {text}
+      {onClose
           && (
             <X
               onClick={() => {
-                if (props.onClose && props.close) {
-                  props.close();
+                if (onClose && close) {
+                  close(text);
                 }
               }}
             />

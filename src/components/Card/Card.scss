@@ -14,14 +14,7 @@
       flex: 1;
       display: flex;
       gap: 10px;
-    }
-
-    & button {
-      position: relative;
-      outline: none;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
+      flex-wrap: wrap;
     }
   }
 
@@ -51,6 +44,37 @@
     & svg {
       width: 18px;
       height: 18px;
+    }
+  }
+}
+
+.morecard {
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+  &__more {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 5px;
+    position: relative;
+    outline: none;
+    background-color: #fff;
+    border-bottom: 1px solid #e3e0e0;
+
+    & button {
+      border: none;
+      outline: none;
+      padding: 0;
+      background-color: transparent;
+      cursor: pointer;
+      height: 22px;
+      width: 24px;
+
+      & svg {
+        height: 100%;
+        width: 100%;
+      }
     }
   }
 }
