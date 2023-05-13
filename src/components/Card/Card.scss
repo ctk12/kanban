@@ -49,8 +49,8 @@
 }
 
 .morecard {
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  // border-radius: 5px;
+  // box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 
   &__more {
     display: flex;
@@ -75,6 +75,31 @@
         height: 100%;
         width: 100%;
       }
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+  &__reorder {
+    height: 100%;
+    width: 20x;
+    flex: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: rgb(184, 212, 236);
+    cursor: pointer;
+    border-radius: 0 0 0 5px;
+
+    & svg {
+      width: 20px;
+      height: 20px;
     }
   }
 }
