@@ -281,6 +281,20 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleSubmitRename = (boardId: number, title: string) => {
+    const BoardIndex = findBoardIndex(boardId);
+
+    if (BoardIndex >= 0) {
+      setBoards(state => {
+        const tempBoard = [...state];
+
+        tempBoard[BoardIndex].title = title;
+
+        return tempBoard;
+      });
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem('kanban', JSON.stringify(boards));
   }, [boards]);
@@ -310,6 +324,7 @@ export const App: React.FC = () => {
               reoder={reoder}
               updateBoards={updateBoards}
               boards={boards}
+              handleSubmitRename={handleSubmitRename}
             />
           ))}
           <Editable

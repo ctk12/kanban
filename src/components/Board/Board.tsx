@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import {
   MoreHorizontal,
   ArrowLeftCircle,
   ArrowRightCircle,
   Power,
+  Save,
 } from 'react-feather';
 
 import './Board.scss';
@@ -35,10 +36,12 @@ type Props = {
   reOderDown: () => void,
   updateBoards: (sBoardId: number, sCardId: number, dBoardId: number) => void,
   boards: BoardPropType[],
+  handleSubmitRename: (boardId: number, title: string) => void,
 };
 
 export function Board(props: Props) {
   const [showMore, setShowMore] = useState(false);
+  const [renameShow, setRenameShow] = useState(false);
   const {
     board,
     removeCardOrBoard,
@@ -54,8 +57,14 @@ export function Board(props: Props) {
     reOderDown,
     updateBoards,
     boards,
+    handleSubmitRename,
   } = props;
   const { id, title, cards } = board;
+  const [renameValue, setRenameValue] = useState(title);
+
+  const setRename = () => {
+    setRenameShow(true);
+  };
 
   return (
     <div className="board">
@@ -67,13 +76,42 @@ export function Board(props: Props) {
         </div>
       )}
       <div className="board__top">
-        <p className="board__top__title">
-          {title}
-          <span>
-            &nbsp;
-            {cards.length}
-          </span>
-        </p>
+        <div className="board__top__title">
+          {renameShow
+            ? (
+              <form
+                className="rename"
+                onSubmit={(e: FormEvent) => {
+                  e.preventDefault();
+                  handleSubmitRename(id, renameValue);
+                  setRenameShow(false);
+                }}
+              >
+                <input
+                  type="text"
+                  value={renameValue}
+                  placeholder="Enter Board Title"
+                  ref={input => input && input.focus()}
+                  onChange={(e) => setRenameValue(e.target.value)}
+                  required
+                />
+                <Save
+                  onClick={() => {
+                    handleSubmitRename(id, renameValue);
+                    setRenameShow(false);
+                  }}
+                />
+              </form>
+            ) : (
+              <>
+                {title}
+                <span>
+                  &nbsp;
+                  {cards.length}
+                </span>
+              </>
+            )}
+        </div>
         <button
           type="button"
           onClick={() => setShowMore(state => !state)}
@@ -86,6 +124,8 @@ export function Board(props: Props) {
               onClose={removeCardOrBoard}
               boardId={id}
               onReorder={onReorder}
+              setRename={setRename}
+              renameShow={renameShow}
             />
           )}
         </button>

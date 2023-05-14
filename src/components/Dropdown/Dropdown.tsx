@@ -9,6 +9,8 @@ type Props = {
   cardId?: number;
   onReorder: (boardId: number, cardId?: number) => void,
   showCardM?: () => void,
+  setRename?: () => void,
+  renameShow?: boolean,
 };
 
 export function Dropdown(props: Props) {
@@ -19,10 +21,30 @@ export function Dropdown(props: Props) {
     cardId,
     onReorder,
     showCardM,
+    setRename,
+    renameShow,
   } = props;
 
   return (
     <div className="dropdown">
+      {cardId && showCardM && (
+        <a
+          href="#move-to"
+          onMouseDown={() => showCardM()}
+        >
+          Move to
+        </a>
+      )}
+      {!renameShow && setRename && (
+        <a
+          href="#rename-board"
+          onMouseDown={() => {
+            setRename();
+          }}
+        >
+          Rename
+        </a>
+      )}
       <a
         href="#re-order"
         onMouseDown={() => {
@@ -35,14 +57,6 @@ export function Dropdown(props: Props) {
       >
         Re-Order
       </a>
-      {cardId && showCardM && (
-        <a
-          href="#move-to"
-          onMouseDown={() => showCardM()}
-        >
-          Move to
-        </a>
-      )}
       <a
         href="#delete"
         onMouseDown={() => {

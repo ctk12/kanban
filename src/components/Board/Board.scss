@@ -102,3 +102,26 @@
     }
   }
 }
+
+.rename {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  & input {
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid #1379ec;
+    padding: 10px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    font-weight: bold;
+  }
+
+  & svg {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
